@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6" />
+	<Project>
+		<Option title="ORB-slam" />
+		<Option pch_mode="2" />
+		<Option compiler="gcc" />
+		<Build>
+			<Target title="Debug">
+				<Option output="bin/Debug/ORB-slam" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj/Debug/" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-g" />
+				</Compiler>
+			</Target>
+			<Target title="Release">
+				<Option output="bin/Release/ORB-slam" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj/Release/" />
+				<Option type="0" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-O2" />
+					<Add option="-s" />
+				</Compiler>
+			</Target>
+		</Build>
+		<Compiler>
+			<Add option="`opencv-config --cxxflags`" />
+			<Add directory="../OpenCV/include/opencv" />
+			<Add directory="../OpenCV/include/opencv2" />
+			<Add directory="../../../../usr/include/eigen3" />
+		</Compiler>
+		<Linker>
+			<Add option="`opencv-config --ldstaticflags`" />
+			<Add library="../../../../usr/local/lib/libopencv_calib3d.so" />
+			<Add library="../../../../usr/local/lib/libopencv_core.so" />
+			<Add library="../../../../usr/local/lib/libopencv_features2d.so" />
+			<Add library="../../../../usr/local/lib/libopencv_flann.so" />
+			<Add library="../../../../usr/local/lib/libopencv_highgui.so" />
+			<Add library="../../../../usr/local/lib/libopencv_imgcodecs.so" />
+			<Add library="../../../../usr/local/lib/libopencv_imgproc.so" />
+			<Add library="../../../../usr/local/lib/libopencv_ml.so" />
+			<Add library="../../../../usr/local/lib/libopencv_objdetect.so" />
+			<Add library="../../../../usr/local/lib/libopencv_photo.so" />
+			<Add library="../../../../usr/local/lib/libopencv_shape.so" />
+			<Add library="../../../../usr/local/lib/libopencv_stitching.so" />
+			<Add library="../../../../usr/local/lib/libopencv_superres.so" />
+			<Add library="../../../../usr/local/lib/libopencv_video.so" />
+			<Add library="../../../../usr/local/lib/libopencv_videoio.so" />
+			<Add library="../../../../usr/local/lib/libopencv_videostab.so" />
+			<Add library="../../../../usr/local/lib/libopencv_viz.so" />
+			<Add library="../../../../usr/local/lib/libopencv_aruco.so" />
+			<Add library="../../../../usr/local/lib/libopencv_bgsegm.so" />
+			<Add library="../../../../usr/local/lib/libopencv_bioinspired.so" />
+			<Add library="../../../../usr/local/lib/libopencv_ccalib.so" />
+			<Add library="../../../../usr/local/lib/libopencv_cvv.so" />
+			<Add library="../../../../usr/local/lib/libopencv_datasets.so" />
+			<Add library="../../../../usr/local/lib/libopencv_dnn.so" />
+			<Add library="../../../../usr/local/lib/libopencv_dpm.so" />
+			<Add library="../../../../usr/local/lib/libopencv_face.so" />
+			<Add library="../../../../usr/local/lib/libopencv_fuzzy.so" />
+			<Add library="../../../../usr/local/lib/libopencv_hdf.so" />
+			<Add library="../../../../usr/local/lib/libopencv_line_descriptor.so" />
+			<Add library="../../../../usr/local/lib/libopencv_optflow.so" />
+			<Add library="../../../../usr/local/lib/libopencv_plot.so" />
+			<Add library="../../../../usr/local/lib/libopencv_reg.so" />
+			<Add library="../../../../usr/local/lib/libopencv_rgbd.so" />
+			<Add library="../../../../usr/local/lib/libopencv_saliency.so" />
+			<Add library="../../../../usr/local/lib/libopencv_sfm.so" />
+			<Add library="../../../../usr/local/lib/libopencv_stereo.so" />
+			<Add library="../../../../usr/local/lib/libopencv_structured_light.so" />
+			<Add directory="../../../../usr/local/lib" />
+			<Add directory="../../../../usr/include/eigen3" />
+		</Linker>
+		<Unit filename="featureTracking.cpp" />
+		<Unit filename="lena.jpg" />
+		<Unit filename="reprojectionError.cpp" />
+		<Extensions>
+			<code_completion />
+			<debugger />
+		</Extensions>
+	</Project>
+</CodeBlocks_project_file>

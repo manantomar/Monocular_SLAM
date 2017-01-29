@@ -1,0 +1,120 @@
+# depslib dependency file v1.0
+1485663637 source:/home/manan/Downloads/ORB-slam/main.cpp
+	"slam.h"
+
+1450450936 /home/manan/Downloads/OpenCV/include/opencv/cvaux.h
+	"opencv2/core/core_c.h"
+	"opencv2/imgproc/imgproc_c.h"
+	"opencv2/photo/photo_c.h"
+	"opencv2/video/tracking_c.h"
+	"opencv2/objdetect/objdetect_c.h"
+
+1450450936 /home/manan/Downloads/OpenCV/include/opencv/highgui.h
+	"opencv2/core/core_c.h"
+	"opencv2/highgui/highgui_c.h"
+
+1450450936 /home/manan/Downloads/OpenCV/include/opencv/cxcore.h
+	"opencv2/core/core_c.h"
+
+1450450936 /home/manan/Downloads/OpenCV/include/opencv/cv.h
+	"opencv2/core/core_c.h"
+	"opencv2/imgproc/imgproc_c.h"
+	"opencv2/photo/photo_c.h"
+	"opencv2/video/tracking_c.h"
+	"opencv2/objdetect/objdetect_c.h"
+
+1450450936 /home/manan/Downloads/OpenCV/include/opencv2/opencv.hpp
+	"opencv2/core.hpp"
+	"opencv2/imgproc.hpp"
+	"opencv2/photo.hpp"
+	"opencv2/video.hpp"
+	"opencv2/features2d.hpp"
+	"opencv2/objdetect.hpp"
+	"opencv2/calib3d.hpp"
+	"opencv2/imgcodecs.hpp"
+	"opencv2/videoio.hpp"
+	"opencv2/highgui.hpp"
+	"opencv2/ml.hpp"
+
+1485663578 source:/home/manan/Downloads/ORB-slam/featureTracking.cpp
+	"slam.h"
+
+1482602071 source:/home/manan/Downloads/ORB-slam/reprojectionError.cpp
+	<opencv2/core.hpp>
+	<opencv2/sfm.hpp>
+	<opencv2/viz.hpp>
+	<cvaux.h>
+	<highgui.h>
+	<stdio.h>
+	<stdlib.h>
+	<cxcore.h>
+	<cv.h>
+	<opencv2/imgproc.hpp>
+	<opencv2/core/core_c.h>
+	<opencv2/features2d/features2d.hpp>
+	<opencv2/core/cuda.hpp>
+	<opencv2/videoio.hpp>
+	<opencv2/opencv.hpp>
+	<vector>
+	<iostream>
+	<iomanip>
+	<opencv2/sfm.hpp>
+	<opencv2/viz.hpp>
+	<opencv2/calib3d.hpp>
+	<opencv2/core.hpp>
+	<fstream>
+	<string>
+
+1484568669 source:/home/manan/Downloads/ORB-slam/visual_odometry.cpp
+	"visual_odometry.h"
+
+1484566702 /home/manan/Downloads/ORB-slam/visual_odometry.h
+	"opencv2/video/tracking.hpp"
+	"opencv2/imgproc/imgproc.hpp"
+	"opencv2/highgui/highgui.hpp"
+	"opencv2/features2d/features2d.hpp"
+	"opencv2/calib3d/calib3d.hpp"
+	<iostream>
+	<ctype.h>
+	<algorithm>
+	<iterator>
+	<vector>
+	<ctime>
+	<sstream>
+	<fstream>
+	<string>
+
+1485663158 source:/home/manan/Downloads/ORB-slam/triangulate.cpp
+
+1485663237 /home/manan/Downloads/ORB-slam/slam.h
+	<opencv2/core.hpp>
+	<opencv2/sfm.hpp>
+	<opencv2/viz.hpp>
+	<opencv2/viz/vizcore.hpp>
+	<cvaux.h>
+	<highgui.h>
+	<stdio.h>
+	<stdlib.h>
+	<cxcore.h>
+	<cv.h>
+	<opencv2/imgproc.hpp>
+	<opencv2/core/core_c.h>
+	<opencv2/features2d/features2d.hpp>
+	<opencv2/core/cuda.hpp>
+	<opencv2/videoio.hpp>
+	<opencv2/opencv.hpp>
+	<vector>
+	<iostream>
+	<iomanip>
+	<opencv2/sfm.hpp>
+	<opencv2/viz.hpp>
+	<opencv2/calib3d.hpp>
+	<opencv2/core.hpp>
+	<iostream>
+	<fstream>
+	<string>
+	<math.h>
+
+1485663560 source:/home/manan/Downloads/ORB-slam/featureDetection.cpp
+	"slam.h"
+

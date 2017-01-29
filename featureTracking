@@ -1,0 +1,178 @@
+#include<opencv\cvaux.h>
+#include<opencv\highgui.h>
+#include<stdio.h>
+#include<stdlib.h>
+#include<opencv\cxcore.h>
+#include<io.h>
+#include<conio.h>
+#include<opencv\cv.h>
+#include<opencv2\imgproc.hpp>
+//#include<vo_features.h>
+//#include<opencv2/calib3d/calib3d_c.h>
+
+using namespace cv;
+using namespace std;
+
+#define MIN_NUM_FEAT 100
+
+void featureDetection(Mat img_1, vector<Point2f>& points1)	{
+	vector<KeyPoint> keypoints_1;
+	//int fast_threshold = 20;
+	//bool nonmaxSuppression = true;
+	/*ORB det(500, 1.2f, 20, 31, 0); // default values of 2.3.1
+	det.detect(img_1, keypoints_1);*/
+	int fast_threshold = 15;
+	bool nonmaxSuppression = true;
+	FAST(img_1, keypoints_1, fast_threshold, nonmaxSuppression);
+	cout << keypoints_1.size()<<"  ";
+	Mat out;
+	drawKeypoints(img_1, keypoints_1, out, Scalar::all(255));
+	imshow("video", out);
+	KeyPoint::convert(keypoints_1, points1, vector<int>());
+}
+
+void featureTracking(Mat img_1, Mat img_2, vector<Point2f>& points1, vector<Point2f>& points2, vector<uchar>& status)	{
+
+	//this function automatically gets rid of points for which tracking fails
+	vector<KeyPoint> keypoints_1;
+	vector<float> err;
+	Size winSize = Size(21, 21);
+	TermCriteria termcrit = TermCriteria(TermCriteria::COUNT + TermCriteria::EPS, 30, 0.01);
+
+	calcOpticalFlowPyrLK(img_1, img_2, points1, points2, status, err, winSize, 3, termcrit, 0, 0.001);
+	cout << points2.size() << " bing   ";
+	cout << points1.size() << " dob   ";
+
+	/*KeyPoint::convert(keypoints_1, points2, vector<int>());
+	Mat out;
+	drawKeypoints(img_1, keypoints_1, out, Scalar::all(255));
+	cout << keypoints_1.size()<<" bing   ";
+	imshow("tracking", out);
+	KeyPoint::convert(keypoints_1, points2, vector<int>());
+
+	*/
+
+	vector<KeyPoint> tracked_points;
+
+	for (vector<Point2f>::const_iterator it = points2.begin();
+		it != points2.end(); it++) {
+		cv::KeyPoint kp(*it, 8);
+		tracked_points.push_back(kp);
+	}
+
+	Mat out;
+	drawKeypoints(img_1, tracked_points, out, Scalar::all(255));
+	imshow("tracking", out);
+
+	//getting rid of points for which the KLT tracking failed or those who have gone outside the frame
+	int indexCorrection = 0;
+	for (int i = 0; i<status.size(); i++)
+	{
+		Point2f pt = points2.at(i - indexCorrection);
+		if ((status.at(i) == 0) || (pt.x<0) || (pt.y<0))	{
+			if ((pt.x<0) || (pt.y<0))	{
+				status.at(i) = 0;
+			}
+			points1.erase(points1.begin() + (i - indexCorrection));
+			points2.erase(points2.begin() + (i - indexCorrection));
+			indexCorrection++;
+		}
+
+	}
+
+}
+
+int main(int argc, char **argv){
+
+	Mat prevFrame;
+	Mat currFrame;
+	Mat prevFrame_c;
+	Mat currFrame_c;
+
+	Mat R_f, t_f;
+
+	vector<Point2f> prev_features;
+	vector<Point2f> curr_features;
+	vector<Point2f> points1;
+
+	Mat E, R, t, mask;
+
+	double focal = 132.07;
+	cv::Point2d pp(169.6, 95.25);
+
+	cvNamedWindow("video", CV_WINDOW_AUTOSIZE);
+	cvNamedWindow("tracking", CV_WINDOW_AUTOSIZE);
+
+
+	VideoCapture cap(0);
+	if (!cap.isOpened())
+		return -1;
+
+	Mat img_1_c;
+	Mat img_1;
+	cap >> img_1_c;
+	cvtColor(img_1_c, img_1, COLOR_BGR2GRAY);
+
+	featureDetection(img_1, points1);
+	prevFrame = img_1;
+	prev_features = points1;
+
+
+
+	while(1<2) {
+
+		cap >> currFrame_c;
+		cvtColor(currFrame_c, currFrame, COLOR_BGR2GRAY);
+
+		//featureDetection(prevFrame, prev_features);
+
+		vector<uchar> status;
+		featureTracking(prevFrame, currFrame, prev_features, curr_features, status);
+
+		if (prev_features.size() < MIN_NUM_FEAT)	{
+			//cout << "Number of tracked features reduced to " << prevFeatures.size() << endl;
+			//cout << "trigerring redection" << endl;
+			featureDetection(prevFrame, prev_features);
+			featureTracking(prevFrame, currFrame, prev_features, curr_features, status);
+		}
+
+		/*	E = findEssentialMat(curr_features, prev_features, focal, pp, RANSAC, 0.999, 1.0, mask);
+			recoverPose(E, curr_features, prev_features, R, t, focal, pp, mask);
+
+			Mat prevPts(2, prev_features.size(), CV_64F), currPts(2, curr_features.size(), CV_64F);
+
+
+			for (int i = 0; i<prev_features.size(); i++)	{   //this (x,y) combination makes sense as observed from the source code of triangulatePoints on GitHub
+				prevPts.at<double>(0, i) = prev_features.at(i).x;
+				prevPts.at<double>(1, i) = prev_features.at(i).y;
+
+				currPts.at<double>(0, i) = curr_features.at(i).x;
+				currPts.at<double>(1, i) = curr_features.at(i).y;
+			}
+
+			//scale = getAbsoluteScale(numFrame, 0, t.at<double>(2));
+
+			//cout << "Scale is " << scale << endl;
+
+			if ((scale>0.1) && (t.at<double>(2) > t.at<double>(0)) && (t.at<double>(2) > t.at<double>(1))) {
+
+				t_f = t_f + scale*(R_f*t);
+				R_f = R*R_f;
+
+			}
+
+			else {
+				//cout << "scale below 0.1, or incorrect translation" << endl;
+			}
+
+		}
+		*/
+		prevFrame = currFrame.clone();
+		prev_features = curr_features;
+
+
+		if (waitKey(30) >= 0) break;
+
+
+	}
+}
